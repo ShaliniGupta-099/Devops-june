@@ -1,0 +1,6 @@
+print("=== Day1 : 1 june 2026===")
+print ("Name: Shalini Gupta")
+print ("Background: Ex-TCS System Engineer")
+print ("Mission: DevOps Engineer by Feb 2027")
+print ("Rule: Bina task kiye nahi sona ")
+print ("Status: Day1 complete ")
