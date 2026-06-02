@@ -1,0 +1,11 @@
+print ("== Day2:2june2026==")
+name=input("enter your name:")
+experience=input("enter your experience:")
+target=input("enter your target:")
+
+print("\n---Profile Summary---")
+print("Name:", name)
+print("Experience:", experience)
+print("Target:", target)
+print("Status: Day2 complete")
+print("Next: Git and Docker basics")
