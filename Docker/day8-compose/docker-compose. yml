@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+shalini-app:
+image:varshney30/shalini-script:latest
+container_name: shalini-day8
+restart:always
+
+nginx:
+images:nginx:alpine
+container_name: shalini-nginx
+ports:
+-"8080:80"
+restart: always
