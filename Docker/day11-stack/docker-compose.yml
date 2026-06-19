@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # 1. Database - MySQL
+  db:
+    image: mysql:8.0
+    container_name: shalini-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: shalini15lpa
+      MYSQL_DATABASE: shalini_db
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - shalini-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Backend - Node.js
+  backend:
+    image: node:18-alpine
+    container_name: shalini-backend
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: sh -c "npm install && node server.js"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      MYSQL_ROOT_PASSWORD: shalini15lpa
+    networks:
+      - shalini-network
+    expose:
+      - "3000"
+
+  # 3. Frontend - Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: shalini-nginx
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./html:/usr/share/nginx/html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    networks:
+      - shalini-network
+
+# Networks - Saare container ek network me baat karenge
+networks:
+  shalini-network:
+    driver: bridge
+
+# Volumes - Database ka data save rahega
+volumes:
+  db_data:
